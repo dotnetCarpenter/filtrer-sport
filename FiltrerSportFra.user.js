@@ -7,12 +7,14 @@
 // @author       dotnetCarpenter
 // @match        https://www.dr.dk/nyheder
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=dr.dk
-// @grant        none
+// @grant        GM_registerMenuCommand
 // @supportURL   https://gist.github.com/dotnetCarpenter/855c165ff4a7d69d5458b2ce477da59d
 // ==/UserScript==
 
 (function() {
     "use strict"
+
+/********************** DEBUG FUNCTIONS **********************/
 
     //    trace :: a -> b -> b
     const trace = s => a => (console.debug (s, a), a)
@@ -20,28 +22,45 @@
     //    dbgln :: String | Symbol -> Object -> a
     const dbgln = accessor => a => (console.debug (a?.[accessor]), a)
 
-    //    pipe :: Array<(a -> b)> -> a -> b
-    const pipe = (...fs) => x => fs.reduce ((x, f) => f (x), x)
+/********************** FUNCTORS **********************/
 
+    //    Just :: a -> Functor<a>
     const Just = x => ({ fmap: f => Maybe (f (x)) })
-    const Nothing = _ => ({ fmap: _ => Nothing () })
 
+    //    Nothing :: Functor
+    const Nothing = { fmap: () => Nothing }
+
+    //    Maybe :: a -> Just<a> | Nothing
     const Maybe = x => x == null
-        ? Nothing ()
+        ? Nothing
         : Just (x)
 
+/********************** UTILITY FUNCTIONS **********************/
+
+    //    fmap :: (a -> b) -> Functor<a> -> Functor<b>
     const fmap = f => Functor => Functor.fmap (f)
 
-    //    maybe :: Functor F => (a -> F<b>) -> c -> F a -> b | c
-    const maybe = f => y => Functor => {
-        let x
-        const fmapAndUnwrap = pipe (f, fmap (a => x = a))
-        fmapAndUnwrap (Functor)
-        return x ?? y
+    //    maybe :: (a -> Functor<b>) -> c -> a -> b | c
+    const maybe = f => c => a => {
+        let b
+
+        pipe (f, fmap (x => b = x))
+             (a)
+
+        return b ?? c
     }
+
+    //    pipe :: Array<(a -> b)> -> a -> b
+    const pipe = (...fs) => a => fs.reduce ((b, f) => f (b), a)
+
+    //    map :: (a -> b) -> Array<a> -> Array<b>
+    const map = f => array => array.map (f)
 
     //    filter :: (a -> Boolean) -> Array<a> -> Array<a>
     const filter = f => array => array.filter (f)
+
+
+/********************** PROGRAM **********************/
 
     //    compareTextContent :: Array<String> -> HtmlElement -> Boolean
     const compareTextContent = textContentList => element => textContentList.includes (element.textContent)
@@ -56,15 +75,11 @@
                          (element.parentElement)
     }
 
-    //    xfade :: Array<Object>
-    const xfade = [{ opacity: 0, scale: .8 }, { opacity: 1, scale: 1 }]
+    //    querySelector :: String -> HtmlElement -> HtmlElement
+    const querySelector    = s => d => d.querySelector (s)
 
-    //    showCardHandler :: HtmlElement -> HtmlElement -> Event -> Void
-    const showCardHandler = card => item => _ => {
-        item.parentElement.style.opacity = "unset"
-        card.style.display = card.dataset.oldDisplay
-        card.animate (xfade, { duration: 400, delay: 250, fill: "forwards" })
-     }
+    //    querySelectorAll :: String -> HtmlElement -> NodeList<HtmlElement>
+    const querySelectorAll = s => d => d.querySelectorAll (s)
 
     //    cardTopicSelector :: String
     const cardTopicSelector = ".hydra-latest-news-page__short-news-item .dre-teaser-meta-label.dre-teaser-meta-label--primary"
@@ -84,37 +99,54 @@
         "Kort sport",
         "Kvindelandsholdet",
         "Sport",
-        "Tennis",
         "Superliga",
+        "Tennis",
     ]
 
+    //    xfade :: Array<Object>
+    const xfade = [{ opacity: 0, scale: .8 }, { opacity: 1, scale: 1 }]
+
+    //    showCardHandler :: HtmlElement -> HtmlElement -> Event -> Void
+    const showCardHandler = card => item => _ => {
+        item.parentElement.style.opacity = "unset"
+        card.style.display = card.dataset.oldDisplay
+        card.animate (xfade, { duration: 400, delay: 250, fill: "forwards" })
+    }
+
+    // TODO: Usage of excludedCardsHeadline is unpure and brittle
     //    excludedCardsHeadline :: Array<String>
     const excludedCardsHeadline = []
 
-    //    cards :: Array<HtmlElement>
-    const cards = Array.from (document.querySelectorAll (cardTopicSelector))
-                       .filter (compareTextContent (sportTopics))
-                       //.map (dbgln ("textContent")) // print text content of the selected elements
-                       .map (findParent ("li"))
-                       .filter (x => x)
-                       // TODO: WARNING unpure use of excludedCardsHeadline
-                       .map (card => (excludedCardsHeadline.push (card.querySelector (headlineSelector)?.innerText), card))
-
-    const querySelector    = s => d => d.querySelector (s)
-    const querySelectorAll = s => d => d.querySelectorAll (s)
-    const getListItems     = pipe (
+    //    getListItems :: a -> Maybe<b>
+    const getListItems = pipe (
+        Maybe,
         fmap (querySelector ("ol.hydra-latest-news-page__index-list")),
         fmap (querySelectorAll ("li .hydra-card-title")),
         fmap (Array.from),
         fmap (filter (compareTextContent (excludedCardsHeadline))))
 
+    //    getCards :: a -> Maybe<b>
+    const getCards = pipe (
+        Maybe,
+        fmap (querySelectorAll (cardTopicSelector)),
+        fmap (Array.from),
+        fmap (filter (compareTextContent (sportTopics))),
+        fmap (map (findParent ("li"))),
+        fmap (map (card => (
+            excludedCardsHeadline.push (card.querySelector (headlineSelector)?.innerText),
+            card))))
 
 /********************** RUN PROGRAM **********************/
+
+    //    cards :: Array<HtmlElement>
+    const cards = maybe (getCards)
+                        ([])
+                        (document)
 
     //    listItems :: Array<HtmlElement>
     const listItems = maybe (getListItems)
                             ([])
-                            (Just (document))
+                            (document)
 
     // Remove sport cards
     cards.forEach (card => (card.dataset.oldDisplay = card.style.display, card.style.display = "none", card.style.opacity = 0))
@@ -127,4 +159,13 @@
                                                                showCardHandler (cards[index])
                                                                                (item),
                                                                { once: true, passive: true }))
+
+    /*
+    -- GM_registerMenuCommand (menuName, callbackFunction, accessKey)
+    https://stackoverflow.com/questions/56024629/what-is-the-accesskey-parameter-of-gm-registermenucommand-and-how-to-use-it
+    */
+    const menu_command_id_1 = GM_registerMenuCommand("Ret i filtret", event => {
+        prompt ("Tilføj et emne der skal filtreres bord:", sportTopics.toString ())
+    }, "l")
+
 })();

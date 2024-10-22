@@ -11,7 +11,7 @@ class Just {
     }
 }
 class Nothing {
-    fmap (_) { return this }
+    fmap () { return this }
 }
 
 const I = x => x

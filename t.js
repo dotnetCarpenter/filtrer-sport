@@ -6,10 +6,10 @@ const Y = f => (g => g (g)) (g => f (x => g (g) (x)))
 const pipe = (...fs) => x => fs.reduce ((x, f) => f (x), x)
 
 const Just = x => ({ fmap: f => Maybe (f (x)) })
-const Nothing = _ => ({ fmap: _ => Nothing () })
+const Nothing = { fmap: _ => Nothing }
 
 const Maybe = x => x == null
-    ? Nothing ()
+    ? Nothing
     : Just (x)
 
 const fmap = f => Functor => Functor.fmap (f)
