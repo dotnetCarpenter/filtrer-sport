@@ -15,26 +15,11 @@ const fmap = f => Functor => Functor.fmap (f)
 const maybe = y => Functor => {
     let x
 
-    fmap (a => x = a ?? y)
+    fmap (a => x = a)
          (Functor)
 
-    // return x ?? y
-    return x
+    return x ?? y
 }
-// const maybe = y => Functor => {
-    // let x
-    // console.debug (Functor instanceof Just)
-    // switch (Functor.name) {
-    //     case Just: fmap (y => { x = y})
-    //                     (Functor)
-    //         break
-    //     case Nothing: x = y
-    //         break
-
-    //     default: throw `Not implemented`
-    // }
-    // return x
-// }
 
 const defaultNothing = maybe ("It was nothing")
 console.log (
