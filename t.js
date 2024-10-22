@@ -3,48 +3,45 @@
 const I = x => x
 const Y = f => (g => g (g)) (g => f (x => g (g) (x)))
 
-const Just2 = x => ({ fmap: f => Maybe (f (x)) })
-const Nothing2 = _ => ({ fmap: _ => Maybe () })
-
-// class Just {
-//     #x
-//     constructor (x) {
-//         console.debug ("Just::constructor", x)
-//         this.#x = x
-//     }
-//     fmap (f) {
-//         console.debug ("Just::fmap", this.#x)
-//         return Maybe (f (this.#x))
-//     }
-
-//     toString () { return `Just (${this.#x})` }
-//     inspect () { return this.toString () }
-// }
-// class Nothing {
-//     fmap (_) {
-//         return this
-//     }
-
-//     toString () { return `Nothing ()` }
-//     inspect () { return this.toString () }
-// }
+const Just = x => ({ fmap: f => Maybe (f (x)) })
+const Nothing = _ => ({ fmap: _ => Nothing () })
 
 const Maybe   = x => x == null
-    ? Nothing2 ()
-    : Just2 (x)
+    ? Nothing ()
+    : Just (x)
 
 const fmap = f => Functor => Functor.fmap (f)
-const maybe = Functor => {
+
+const maybe = y => Functor => {
     let x
-    fmap (y => { x = y})
+
+    fmap (a => x = a ?? y)
          (Functor)
+
+    // return x ?? y
     return x
 }
+// const maybe = y => Functor => {
+    // let x
+    // console.debug (Functor instanceof Just)
+    // switch (Functor.name) {
+    //     case Just: fmap (y => { x = y})
+    //                     (Functor)
+    //         break
+    //     case Nothing: x = y
+    //         break
 
+    //     default: throw `Not implemented`
+    // }
+    // return x
+// }
+
+const defaultNothing = maybe ("It was nothing")
 console.log (
-    maybe (fmap (x => 1 + x) (Maybe (1))),
-    maybe (fmap (x => 1 + x) (Maybe ())),
+    defaultNothing (fmap (x => 1 + x) (Maybe (1))),
+    defaultNothing (fmap (x => 1 + x) (Maybe ())),
 )
-// const getItem = unwrap (() => null) ("Nothing happen") (x => x + 1)
 
+
+// const getItem = fooBar (() => null) ("Nothing happen") (x => x + 1)
 // console.log (getItem)
