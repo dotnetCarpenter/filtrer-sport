@@ -2,25 +2,46 @@
 // ==UserScript==
 // @name         Filtrer sport
 // @namespace    http://tampermonkey.net/
-// @version      2024-10-14
+// @version      2024.10.22
 // @description  Filtrer sport på dr.dk/nyheder fra.
 // @author       dotnetCarpenter
 // @match        https://www.dr.dk/nyheder
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=dr.dk
 // @grant        none
+// @supportURL   https://gist.github.com/dotnetCarpenter/855c165ff4a7d69d5458b2ce477da59d
 // ==/UserScript==
 
 (function() {
-    'use strict'
+    "use strict"
 
-    //    dbgln :: String -> a -> a
+    //    trace :: a -> b -> b
+    const trace = s => a => (console.debug (s, a), a)
+
+    //    dbgln :: String | Symbol -> Object -> a
     const dbgln = accessor => a => (console.debug (a?.[accessor]), a)
 
-    // TODO: Implement Functor church encoded
-    // Array.from (
-    //     document.querySelector ("ol.hydra-latest-news-page__index-list")
-    //             .querySelectorAll ("li .hydra-card-title"))
-    //             .filter (compareTextContent (excludedCardsHeadline))
+    //    pipe :: Array<(a -> b)> -> a -> b
+    const pipe = (...fs) => x => fs.reduce ((x, f) => f (x), x)
+
+    const Just = x => ({ fmap: f => Maybe (f (x)) })
+    const Nothing = _ => ({ fmap: _ => Nothing () })
+
+    const Maybe = x => x == null
+        ? Nothing ()
+        : Just (x)
+
+    const fmap = f => Functor => Functor.fmap (f)
+
+    //    maybe :: Functor F => (a -> F<b>) -> c -> F a -> b | c
+    const maybe = f => y => Functor => {
+        let x
+        const fmapAndUnwrap = pipe (f, fmap (a => x = a))
+        fmapAndUnwrap (Functor)
+        return x ?? y
+    }
+
+    //    filter :: (a -> Boolean) -> Array<a> -> Array<a>
+    const filter = f => array => array.filter (f)
 
     //    compareTextContent :: Array<String> -> HtmlElement -> Boolean
     const compareTextContent = textContentList => element => textContentList.includes (element.textContent)
@@ -76,13 +97,24 @@
                        //.map (dbgln ("textContent")) // print text content of the selected elements
                        .map (findParent ("li"))
                        .filter (x => x)
+                       // TODO: WARNING unpure use of excludedCardsHeadline
                        .map (card => (excludedCardsHeadline.push (card.querySelector (headlineSelector)?.innerText), card))
 
+    const querySelector    = s => d => d.querySelector (s)
+    const querySelectorAll = s => d => d.querySelectorAll (s)
+    const getListItems     = pipe (
+        fmap (querySelector ("ol.hydra-latest-news-page__index-list")),
+        fmap (querySelectorAll ("li .hydra-card-title")),
+        fmap (Array.from),
+        fmap (filter (compareTextContent (excludedCardsHeadline))))
+
+
+/********************** RUN PROGRAM **********************/
+
     //    listItems :: Array<HtmlElement>
-    const listItems = Array.from (
-        document.querySelector ("ol.hydra-latest-news-page__index-list") // FIXME: Object is possibly 'null'.
-                .querySelectorAll ("li .hydra-card-title"))
-                .filter (compareTextContent (excludedCardsHeadline))
+    const listItems = maybe (getListItems)
+                            ([])
+                            (Just (document))
 
     // Remove sport cards
     cards.forEach (card => (card.dataset.oldDisplay = card.style.display, card.style.display = "none", card.style.opacity = 0))
@@ -95,11 +127,4 @@
                                                                showCardHandler (cards[index])
                                                                                (item),
                                                                { once: true, passive: true }))
-
-    /*-- GM_registerMenuCommand (menuName, callbackFunction, accessKey)
-https://stackoverflow.com/questions/56024629/what-is-the-accesskey-parameter-of-gm-registermenucommand-and-how-to-use-it
-*/
-//    const menu_command_id_1 = GM_registerMenuCommand("Tilføj til filtret", event => {
-//        prompt ("Tilføj et emne der skal filtreres bord:", sportTopics.toString ())
-//    })
 })();
