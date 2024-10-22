@@ -64,6 +64,7 @@
         "Kvindelandsholdet",
         "Sport",
         "Tennis",
+        "Superliga",
     ]
 
     //    excludedCardsHeadline :: Array<String>
