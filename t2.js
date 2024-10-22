@@ -22,7 +22,7 @@ const Maybe = x => x == null
 
 const fmap = f => Functor => Functor.fmap (f)
 
-//    maybe :: Functor F => (a -> F b) -> c -> F -> b | c
+//    maybe :: Functor F => (a -> F b) -> c -> F a -> b | c
 const maybe = f => y => Functor => {
     switch (Functor.constructor) {
         case Just:
