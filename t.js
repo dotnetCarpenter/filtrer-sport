@@ -6,7 +6,7 @@ const Y = f => (g => g (g)) (g => f (x => g (g) (x)))
 const Just = x => ({ fmap: f => Maybe (f (x)) })
 const Nothing = _ => ({ fmap: _ => Nothing () })
 
-const Maybe   = x => x == null
+const Maybe = x => x == null
     ? Nothing ()
     : Just (x)
 
@@ -16,7 +16,7 @@ const maybe = y => Functor => {
     let x
 
     fmap (a => x = a)
-         (Functor)
+         (Functor) // if the Functor = Nothing, the function will not run
 
     return x ?? y
 }
