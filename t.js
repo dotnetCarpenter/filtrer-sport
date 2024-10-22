@@ -3,6 +3,8 @@
 const I = x => x
 const Y = f => (g => g (g)) (g => f (x => g (g) (x)))
 
+const pipe = fs => x => fs.reduce ((x, f) => f (x), x)
+
 const Just = x => ({ fmap: f => Maybe (f (x)) })
 const Nothing = _ => ({ fmap: _ => Nothing () })
 
@@ -12,21 +14,26 @@ const Maybe = x => x == null
 
 const fmap = f => Functor => Functor.fmap (f)
 
-const maybe = y => Functor => {
+//    maybe :: Functor F => (a -> F b) -> c -> F -> b | c
+const maybe = f => y => Functor => {
     let x
-
-    fmap (a => x = a)
-         (Functor) // if the Functor = Nothing, the function will not run
-
+    const fmapAndUnwrap = pipe ([f, fmap (a => x = a)])
+    fmapAndUnwrap (Functor)
     return x ?? y
 }
 
-const defaultNothing = maybe ("It was nothing")
+/* program */
+const defaultNothing = maybe (I) ("It was nothing")
+const add1 = x => 1 + x
 console.log (
-    defaultNothing (fmap (x => 1 + x) (Maybe (1))),
-    defaultNothing (fmap (x => 1 + x) (Maybe ())),
+    defaultNothing (fmap (add1) (Maybe (1))),
+    defaultNothing (fmap (add1) (Maybe ( ))),
 )
 
+console.debug (pipe ([add1, I])
+                    (41))
 
-// const getItem = fooBar (() => null) ("Nothing happen") (x => x + 1)
-// console.log (getItem)
+const getItem = maybe (fmap (add1)) (0)
+const item1 = getItem (Maybe (1000))
+const item2 = getItem (Maybe (null))
+console.log (item1, item2)
