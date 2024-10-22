@@ -5,6 +5,8 @@ const Y = f => (g => g (g)) (g => f (x => g (g) (x)))
 
 const pipe = (...fs) => x => fs.reduce ((x, f) => f (x), x)
 
+const fmap = f => Functor => Functor.fmap (f)
+
 const Just = x => ({ fmap: f => Maybe (f (x)) })
 const Nothing = { fmap: _ => Nothing }
 
@@ -12,14 +14,14 @@ const Maybe = x => x == null
     ? Nothing
     : Just (x)
 
-const fmap = f => Functor => Functor.fmap (f)
+//    maybe :: (a -> Functor<b>) -> c -> a -> b | c
+const maybe = f => c => a => {
+    let b
 
-//    maybe :: Functor F => (a -> F b) -> c -> F -> b | c
-const maybe = f => y => Functor => {
-    let x
-    const fmapAndUnwrap = pipe (f, fmap (a => x = a))
-    fmapAndUnwrap (Functor)
-    return x ?? y
+    pipe (f, fmap (x => b = x))
+         (a)
+
+    return b ?? c
 }
 
 /* program */
