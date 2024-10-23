@@ -44,7 +44,9 @@ var snd        = False
 console.debug (numPair (snd), // <- 9
                strPair (snd)) // <- bye
 
+//    Just :: a -> b -> (a -> c) -> c
 const Just = x => handleNothing => handleSome => handleSome (x)
+//    Nothing :: a -> (b -> c) -> a
 const Nothing =   handleNothing => handleSome => handleNothing
 
 const Maybe = x => x == null
