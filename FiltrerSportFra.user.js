@@ -96,11 +96,14 @@
         "Golf",
         "Håndbold",
         "Herrelandsholdet",
+        "Herreligaen",
         "Kort sport",
         "Kvindelandsholdet",
         "Sport",
         "Superliga",
         "Tennis",
+        "Tour de France",
+        "Spansk fodbold",
     ]
 
     //    xfade :: Array<Object>
@@ -149,16 +152,17 @@
                             (document)
 
     // Remove sport cards
-    cards.forEach (card => (card.dataset.oldDisplay = card.style.display, card.style.display = "none", card.style.opacity = 0))
+    cards.forEach (card => void (card.dataset.oldDisplay = card.style.display, card.style.display = "none", card.style.opacity = 0))
 
     // Dim sport list items
     listItems.forEach (item => void (item.parentElement.style.opacity = "0.2"))
 
     // Add handler to show hidden card
-    listItems.forEach ((item, index) => item.addEventListener ("pointerdown",
-                                                               showCardHandler (cards[index])
-                                                                               (item),
-                                                               { once: true, passive: true }))
+    listItems.forEach ((item, index) => void (
+        item.addEventListener ("pointerdown",
+            showCardHandler (cards[index])
+                            (item),
+            { once: true, passive: true })))
 
     /*
     -- GM_registerMenuCommand (menuName, callbackFunction, accessKey)
