@@ -89,6 +89,7 @@
     const sportTopics = [
         "Atletik",
         "Badminton",
+        "Basketball",
         "Champions League",
         "Cykling",
         "Engelsk fodbold",
