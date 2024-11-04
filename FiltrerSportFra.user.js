@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         Filtrer sport
 // @namespace    http://tampermonkey.net/
-// @version      2024.10.22
+// @version      2024.11.04
 // @description  Filtrer sport på dr.dk/nyheder fra.
 // @author       dotnetCarpenter
 // @match        https://www.dr.dk/nyheder
@@ -97,13 +97,14 @@
         "Håndbold",
         "Herrelandsholdet",
         "Herreligaen",
+        "Ishockey",
         "Kort sport",
         "Kvindelandsholdet",
+        "Spansk fodbold",
         "Sport",
         "Superliga",
         "Tennis",
         "Tour de France",
-        "Spansk fodbold",
     ]
 
     //    xfade :: Array<Object>
