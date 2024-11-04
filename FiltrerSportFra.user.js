@@ -59,7 +59,6 @@
     //    filter :: (a -> Boolean) -> Array<a> -> Array<a>
     const filter = f => array => array.filter (f)
 
-
 /********************** PROGRAM **********************/
 
     //    compareTextContent :: Array<String> -> HtmlElement -> Boolean
@@ -85,7 +84,38 @@
     const cardTopicSelector = ".hydra-latest-news-page__short-news-item .dre-teaser-meta-label.dre-teaser-meta-label--primary"
     //    headlineSelector :: String
     const headlineSelector = ".hydra-latest-news-page-short-news-article__heading, .hydra-latest-news-page-short-news-card__title"
-    //  sportTopics :: Array<String>
+
+    //    xfade :: Array<Object>
+    const xfade = [{ opacity: 0, scale: .8 }, { opacity: 1, scale: 1 }]
+
+    //    showCardHandler :: HtmlElement -> HtmlElement -> Event -> Void
+    const showCardHandler = card => item => _ => {
+        item.parentElement.style.opacity = "unset"
+        card.style.display = card.dataset.oldDisplay
+        card.animate (xfade, { duration: 400, delay: 250, fill: "forwards" })
+    }
+
+    //    getAllListItems :: a -> Maybe<b>
+    const getAllListItems = pipe (
+        Maybe,
+        fmap (querySelector ("ol.hydra-latest-news-page__index-list")),
+        fmap (querySelectorAll ("li .hydra-card-title")),
+        fmap (Array.from))
+
+    //    getCards :: Maybe<a> -> Maybe<b>
+    const getCards = sportTopics => pipe (
+        fmap (querySelectorAll (cardTopicSelector)),
+        fmap (Array.from),
+        fmap (filter (compareTextContent (sportTopics))),
+        fmap (map (findParent ("li"))))
+
+    //    getHeadlineText :: Array<HtmlElement> -> Array<String>
+    const getHeadlineText = pipe (
+        map (querySelector (headlineSelector)),
+        map (element => element?.innerText))
+
+/********************** RUN PROGRAM **********************/
+   //  sportTopics :: Array<String>
     const sportTopics = [
         "Atletik",
         "Badminton",
@@ -107,49 +137,15 @@
         "Tennis",
         "Tour de France",
     ]
-
-    //    xfade :: Array<Object>
-    const xfade = [{ opacity: 0, scale: .8 }, { opacity: 1, scale: 1 }]
-
-    //    showCardHandler :: HtmlElement -> HtmlElement -> Event -> Void
-    const showCardHandler = card => item => _ => {
-        item.parentElement.style.opacity = "unset"
-        card.style.display = card.dataset.oldDisplay
-        card.animate (xfade, { duration: 400, delay: 250, fill: "forwards" })
-    }
-
-    // TODO: Usage of excludedCardsHeadline is unpure and brittle
-    //    excludedCardsHeadline :: Array<String>
-    const excludedCardsHeadline = []
-
-    //    getListItems :: a -> Maybe<b>
-    const getListItems = pipe (
-        Maybe,
-        fmap (querySelector ("ol.hydra-latest-news-page__index-list")),
-        fmap (querySelectorAll ("li .hydra-card-title")),
-        fmap (Array.from),
-        fmap (filter (compareTextContent (excludedCardsHeadline))))
-
-    //    getCards :: a -> Maybe<b>
-    const getCards = pipe (
-        Maybe,
-        fmap (querySelectorAll (cardTopicSelector)),
-        fmap (Array.from),
-        fmap (filter (compareTextContent (sportTopics))),
-        fmap (map (findParent ("li"))),
-        fmap (map (card => (
-            excludedCardsHeadline.push (card.querySelector (headlineSelector)?.innerText),
-            card))))
-
-/********************** RUN PROGRAM **********************/
-
     //    cards :: Array<HtmlElement>
-    const cards = maybe (getCards)
+    const cards = maybe (getCards (sportTopics))
                         ([])
-                        (document)
+                        (Maybe (document))
 
     //    listItems :: Array<HtmlElement>
-    const listItems = maybe (getListItems)
+    const listItems = maybe (pipe (
+                                getAllListItems,
+                                fmap (filter (compareTextContent (getHeadlineText (cards))))))
                             ([])
                             (document)
 
@@ -169,7 +165,7 @@
     /*
     -- GM_registerMenuCommand (menuName, callbackFunction, accessKey)
     https://stackoverflow.com/questions/56024629/what-is-the-accesskey-parameter-of-gm-registermenucommand-and-how-to-use-it
-    */
+    @ts-ignore */
     const menu_command_id_1 = GM_registerMenuCommand("Ret i filtret", event => {
         prompt ("Tilføj et emne der skal filtreres bord:", sportTopics.toString ())
     }, "l")
