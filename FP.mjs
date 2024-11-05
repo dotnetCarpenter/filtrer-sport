@@ -8,29 +8,37 @@ const Maybe = x => x == null
 
 //    Just :: a -> Functor<a>
 const Just = x => ({
-    [Symbol.toStringTag]: `Just<${x}>`,
+    [Symbol.toStringTag]: `Just <${x}>`,
     fmap: f => Maybe (f (x)),
-    join: () => x
+    join: () => x instanceof Object && "fmap" in x
+        ? x
+        : Maybe (x),
+    chain: f => pipe (join, fmap (f))
 })
 
 //    Nothing :: Functor
 const Nothing = {
     [Symbol.toStringTag]: `Nothing`,
-    fmap: _ => Nothing,
-    join: () => null
+    fmap: () => Nothing,
+    join: () => Nothing,
+    chain: () => Nothing,
 }
 
 //    fmap :: (a -> b) -> Functor<a> -> Functor<b>
 const fmap = f => Functor => Functor.fmap (f)
 
-//    pipe :: Array<(a -> b)> -> a -> b
+//    join :: Functor f => f<f<a>> -> f<a>
+const join = f => f.join ()
+
+//    pipe :: (a -> b) -> a -> b
 const pipe = (...fs) => a => fs.reduce ((b, f) => f (b), a)
 
 export {
-    I,
-    Maybe,
-    Just,
-    Nothing,
     fmap,
+    I,
+    join,
+    Just,
+    Maybe,
+    Nothing,
     pipe,
 }
