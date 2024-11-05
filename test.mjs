@@ -8,8 +8,8 @@ const append = flip (concat)
 
 test ("Functions", t => {
     assert.strictEqual (
-        append (" world") ("Goodbye"),
-        "Goodbye world"
+        append (" world") ("Hello"),
+        "Hello world"
     )
 })
 
@@ -57,6 +57,10 @@ test ("Functor", async t => {
                 compositionLaw2 (string).toString (),
                 "pipe (fmap (f), fmap (g)) === fmap (pipe (f, g))"
             )
+        })
+
+        await t.test ("associativity", { skip: true}, t => {
+
         })
     })
 })
