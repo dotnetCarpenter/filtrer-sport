@@ -9,8 +9,7 @@ const append = flip (concat)
 test ("Functions", t => {
     assert.strictEqual (
         append (" world") ("Hello"),
-        "Hello world"
-    )
+        "Hello world")
 })
 
 test ("Maybe", async t => {
@@ -19,30 +18,25 @@ test ("Maybe", async t => {
     const numbers = Maybe ([1, 2, 3])
     const strings = Maybe (["foo", "bar"])
 
-    await t.test ("identity", t => {
+    await t.test ("Functor identity", t => {
         const identityLaw1 = fmap (I)
         const identityLaw2 = I
 
-        assert.deepStrictEqual (
-            identityLaw1 (numbers).toString (),
-            identityLaw2 (numbers).toString (),
-            "map (id) === id"
-        )
+        const functorIdentityAssertion = Functor => {
+            assert.deepStrictEqual (
+                identityLaw1 (Functor).toString (),
+                identityLaw2 (Functor).toString (),
+                "fmap (id) === id")
+        }
 
-        assert.deepStrictEqual (
-            identityLaw1 (strings).toString (),
-            identityLaw2 (strings).toString (),
-            "map (id) === id"
-        )
+        ([string,
+          nothing,
+          numbers,
+          strings]).forEach (functorIdentityAssertion)
 
-        assert.deepStrictEqual (
-            identityLaw1 (nothing).toString (),
-            identityLaw2 (nothing).toString (),
-            "fmap (id) === id"
-        )
     })
 
-    await t.test ("composition", t => {
+    await t.test ("Functor composition", t => {
         const compositionLaw1 = pipe (
             fmap (append (" cruel")),
             fmap (append (" world")))
@@ -51,26 +45,50 @@ test ("Maybe", async t => {
             append (" cruel"),
             append (" world")))
 
-        assert.deepStrictEqual (
-            compositionLaw1 (string).toString (),
-            compositionLaw2 (string).toString (),
-            "pipe (fmap (f), fmap (g)) === fmap (pipe (f, g))"
-        )
+        const functorCompositionAssertion = Functor => {
+            assert.deepStrictEqual (
+                compositionLaw1 (Functor).toString (),
+                compositionLaw2 (Functor).toString (),
+                "pipe (fmap (f), fmap (g)) === fmap (pipe (f, g))")
+        }
+
+        ([string,
+          nothing,
+          numbers,
+          strings]).forEach (functorCompositionAssertion)
     })
 
-    await t.test ("associativity", t => {
-        const mma = Maybe (string)
-        const associativeLaw1 = pipe (fmap (join), join)
-        const associativeLaw2 = pipe (join, join)
+    await t.test ("Monad associativity", t => {
+        const associativeLaw1      = pipe (join, join)
+        const associativeLaw2      = pipe (fmap (join), join)
+        const callJoinOnInnerValue = pipe (join, fmap (join))
 
-        assert.deepStrictEqual (
-            associativeLaw1 (mma).toString (),
-            associativeLaw2 (mma).toString (),
-            "pipe (fmap (join), join) === pipe (join, join)")
+        const monads = ([string,
+                         nothing,
+                         numbers,
+                         strings]).map (Maybe)
 
-        assert.throws (
-            pipe (join, fmap (join)).bind (null, mma),
-            Error,
-            "pipe (join, fmap (join)) will call join on a string")
+        const monadAssciativeAssertion = mma => {
+            assert.deepStrictEqual (
+                associativeLaw1 (mma).toString (),
+                associativeLaw2 (mma).toString (),
+                "pipe (join, join) === pipe (fmap (join), join)")
+        }
+
+        monads.forEach (monadAssciativeAssertion)
+
+        const throwIfJoinIsCalledOnNonMonad = mma => {
+            assert.throws (
+                callJoinOnInnerValue.bind (null, mma),
+                TypeError,
+                `pipe (join, fmap (join)) will call join on a contained value ${mma}`)
+        }
+
+        ([string,
+          numbers,
+          strings]).forEach (throwIfJoinIsCalledOnNonMonad)
+
     })
+
+    await t.test ("Monad identity", { skip: true }, t => {})
 })
