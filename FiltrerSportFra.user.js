@@ -128,6 +128,7 @@
         "Håndbold",
         "Herrelandsholdet",
         "Herreligaen",
+        "Hestesport",
         "Ishockey",
         "Kort sport",
         "Kvindelandsholdet",
