@@ -1,27 +1,12 @@
 "use strict"
 
-const I = x => x
+import { Maybe, fmap, I, pipe } from "./FP.mjs"
+
 const Y = f => (g => g (g)) (g => f (x => g (g) (x)))
 const B  = f => g => x => f (g (x))
 
 //    map :: (a -> b) -> Array<a> -> Array<b>
 const map = f => array => array.map (f)
-
-const pipe = (...fs) => x => fs.reduce ((x, f) => f (x), x)
-
-const fmap = f => Functor => Functor.fmap (f)
-
-//    Just :: a -> Functor<a>
-const Just = x => ({
-    fmap: f => Maybe (f (x)),
-    join: () => x
-})
-
-//    Nothing :: Functor
-const Nothing = {
-    fmap: _ => Nothing,
-    join: () => null
-}
 
 //    Pair :: Functor Pair => a -> b -> Pair<a,b>
 const Pair = a => b => ({
@@ -38,10 +23,6 @@ const Pair = a => b => ({
 const fst = pair => pair.fst ()
 //    snd :: Pair<a,b> -> b
 const snd = pair => pair.snd ()
-//    Maybe :: a -> Just<a> | Nothing
-const Maybe = x => x == null
-    ? Nothing
-    : Just (x)
 
 //    maybe :: Monad f => (a -> f<b>) -> c -> a -> b | c
 const maybe = f => c => a => pipe (f, a.join)
