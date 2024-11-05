@@ -167,7 +167,7 @@
     -- GM_registerMenuCommand (menuName, callbackFunction, accessKey)
     https://stackoverflow.com/questions/56024629/what-is-the-accesskey-parameter-of-gm-registermenucommand-and-how-to-use-it
     @ts-ignore */
-    const menu_command_id_1 = GM_registerMenuCommand("Ret i filtret", event => {
+    GM_registerMenuCommand("Ret i filtret", event => {
         prompt ("Tilføj et emne der skal filtreres bord:", sportTopics.toString ())
     }, "l")
 
