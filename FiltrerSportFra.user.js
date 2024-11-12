@@ -135,6 +135,7 @@
         "Ishockey",
         "Kort sport",
         "Kvindelandsholdet",
+        "Kvindeligaen",
         "Pokalturneringen",
         "Sejlsport",
         "Spansk fodbold",
