@@ -5,7 +5,7 @@
 // @version      2024.11.04
 // @description  Filtrer sport på dr.dk/nyheder fra.
 // @author       dotnetCarpenter
-// @match        https://www.dr.dk/nyheder
+// @match        https://www.dr.dk/nyheder*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=dr.dk
 // @grant        GM_registerMenuCommand
 // @supportURL   https://gist.github.com/dotnetCarpenter/855c165ff4a7d69d5458b2ce477da59d
