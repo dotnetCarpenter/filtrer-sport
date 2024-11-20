@@ -1,14 +1,16 @@
 // @ts-check
 // ==UserScript==
 // @name         Filtrer sport
-// @namespace    http://tampermonkey.net/
+// @namespace    https://tampermonkey.net/
 // @version      2024.11.04
 // @description  Filtrer sport på dr.dk/nyheder fra.
 // @author       dotnetCarpenter
-// @match        https://www.dr.dk/nyheder*
+// @match        https://www.dr.dk/nyheder
+// @match        https://www.dr.dk/nyheder/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=dr.dk
 // @grant        GM_registerMenuCommand
-// @supportURL   https://gist.github.com/dotnetCarpenter/855c165ff4a7d69d5458b2ce477da59d
+// @source       https://github.com/dotnetCarpenter/filtrer-sport/
+// @supportURL   https://github.com/dotnetCarpenter/filtrer-sport/issues
 // ==/UserScript==
 
 (function() {
@@ -155,6 +157,8 @@
                                 fmap (filter (compareTextContent (getHeadlineText (cards))))))
                             ([])
                             (document)
+
+    // console.debug (cards, listItems)
 
     // Remove sport cards
     cards.forEach (card => void (card.dataset.oldDisplay = card.style.display, card.style.display = "none", card.style.opacity = 0))
