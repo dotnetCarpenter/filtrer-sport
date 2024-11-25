@@ -130,6 +130,9 @@ const sportTopics = [
     "Tennis",
     "Tour de France",
 ]
+
+console.time (`Filter_${sportTopics.length}Sport_Topics`)
+
 //    cards :: Array<HtmlElement>
 const cards = maybe (getCards (sportTopics))
                     ([])
@@ -156,3 +159,5 @@ listItems.forEach ((item, index) => void (
         showCardHandler (cards[index])
                         (item),
         { once: true, passive: true })));
+
+console.timeEnd (`Filter_${sportTopics.length}Sport_Topics`)
