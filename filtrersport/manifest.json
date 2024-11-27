@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Filtrer sport",
 	"description": "Filtrer sport på dr.dk/nyheder fra.",
-	"version": "2024.11.25",
+	"version": "2024.11.27",
 	"icons": {
 		"64": "icons/icon.png"
 	},

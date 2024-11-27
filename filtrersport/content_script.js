@@ -123,6 +123,7 @@ const sportTopics = [
     "Kvindelandsholdet",
     "Kvindeligaen",
     "Pokalturneringen",
+    "PostNord Danmark Rundt",
     "Sejlsport",
     "Spansk fodbold",
     "Sport",
