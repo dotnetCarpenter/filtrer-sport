@@ -1,6 +1,6 @@
 {
   "name": "filtrersport",
-  "version": "2024.11.25",
+  "version": "2024.11.27",
   "scripts": {
     "build": "web-ext build --overwrite-dest"
   },
