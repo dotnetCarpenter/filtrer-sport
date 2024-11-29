@@ -110,6 +110,7 @@ const sportTopics = [
     "Conference League",
     "Cykling",
     "EM håndbold",
+    "EM i håndbold",
     "Engelsk fodbold",
     "Europa League",
     "Fodbold",
