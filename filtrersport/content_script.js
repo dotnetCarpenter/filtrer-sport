@@ -130,6 +130,7 @@ const sportTopics = [
     "Spansk fodbold",
     "Sport",
     "Superliga",
+    "Svømning",
     "Tennis",
     "Tour de France",
 ]

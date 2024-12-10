@@ -1,25 +1,25 @@
 {
-	"manifest_version": 2,
-	"name": "Filtrer sport",
-	"description": "Filtrer sport på dr.dk/nyheder fra.",
-	"version": "2024.11.28",
-	"icons": {
-		"64": "icons/icon.png"
-	},
-	"content_scripts": [
-		{
-			"matches": [
-				"*://*.dr.dk/nyheder",
-				"*://*.dr.dk/nyheder/*"
-			],
-			"js": [
-				"content_script.js"
-			]
-		}
-	],
-	"browser_specific_settings": {
-		"gecko": {
-			"id": "filtrersport@nyheder-dk.dk"
-		}
-	}
+  "manifest_version": 2,
+  "name": "Filtrer sport",
+  "description": "Filtrer sport på dr.dk/nyheder fra.",
+  "version": "2024.12.11",
+  "icons": {
+    "64": "icons/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.dr.dk/nyheder",
+        "*://*.dr.dk/nyheder/*"
+      ],
+      "js": [
+        "content_script.js"
+      ]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "filtrersport@nyheder-dk.dk"
+    }
+  }
 }
