@@ -106,6 +106,7 @@ const sportTopics = [
     "Atletik",
     "Badminton",
     "Basketball",
+    "Boksning",
     "Champions League",
     "Conference League",
     "Cykling",
@@ -133,6 +134,7 @@ const sportTopics = [
     "Svømning",
     "Tennis",
     "Tour de France",
+    "Tysk fodbold",
 ]
 
 console.time (`Filter_${sportTopics.length}Sport_Topics`)
