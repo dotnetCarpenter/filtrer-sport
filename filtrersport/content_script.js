@@ -135,6 +135,7 @@ const sportTopics = [
     "Tennis",
     "Tour de France",
     "Tysk fodbold",
+    "VM i håndbold",
 ]
 
 console.time (`Filter_${sportTopics.length}Sport_Topics`)
