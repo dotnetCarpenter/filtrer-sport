@@ -31,7 +31,7 @@ const maybe = f => c => a => {
     let b
 
     pipe (f, fmap (x => b = x))
-            (a)
+          (a)
 
     return b ?? c
 }
@@ -57,7 +57,7 @@ const findParent = tagName => element => {
     return element.parentElement.tagName.toLowerCase () === tagName
         ? element.parentElement
         : findParent (tagName)
-                        (element.parentElement)
+                     (element.parentElement)
 }
 
 //    querySelector :: String -> HtmlElement -> HtmlElement
