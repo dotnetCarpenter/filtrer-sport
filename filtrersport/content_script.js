@@ -125,6 +125,7 @@ const sportTopics = [
     "Kort sport",
     "Kvindelandsholdet",
     "Kvindeligaen",
+    "Motorsport",
     "Pokalturneringen",
     "PostNord Danmark Rundt",
     "Sejlsport",
