@@ -3,7 +3,7 @@
   "version": "2025.2.8",
   "scripts": {
     "prebuild": "jq '.version = \"'${npm_package_version}'\"' manifest.json > manifest_tmp && mv manifest_tmp manifest.json",
-    "build": "web-ext build --overwrite-dest"
+    "build": "web-ext build --overwrite-dest --artifacts-dir ./build"
   },
   "peerDependencies": {
     "web-ext": "^8.4.0"
