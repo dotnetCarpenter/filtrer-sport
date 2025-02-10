@@ -21,6 +21,8 @@ const Maybe = x => x == null
     ? Nothing
     : Just (x)
 
+// Array<a>.fmap :: Array<a> ~> (a -> b) -> Functor<b>
+Array.prototype.fmap = function (f) { return this.map (f) }
 /********************** UTILITY FUNCTIONS **********************/
 
 //    fmap :: (a -> b) -> Functor<a> -> Functor<b>
@@ -31,7 +33,7 @@ const maybe = f => c => a => {
     let b
 
     pipe (f, fmap (x => b = x))
-          (a)
+         (a)
 
     return b ?? c
 }
