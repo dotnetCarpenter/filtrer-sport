@@ -105,6 +105,7 @@ const getHeadlineText = pipe (
 /********************** RUN PROGRAM **********************/
 //  sportTopics :: Array<String>
 const sportTopics = [
+    "Amerikansk fodbold",
     "Atletik",
     "Badminton",
     "Basketball",
