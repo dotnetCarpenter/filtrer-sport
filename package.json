@@ -1,6 +1,6 @@
 {
   "name": "filtrersport",
-  "version": "2025.2.10",
+  "version": "2025.2.11",
   "scripts": {
     "prebuild": "jq '.version = \"'${npm_package_version}'\"' manifest.json > manifest_tmp && mv manifest_tmp manifest.json",
     "build": "web-ext build --overwrite-dest --artifacts-dir ./build"

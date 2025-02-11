@@ -132,6 +132,7 @@ const sportTopics = [
     "Pokalturneringen",
     "PostNord Danmark Rundt",
     "Sejlsport",
+    "Skisport",
     "Spansk fodbold",
     "Sport",
     "Superliga",
