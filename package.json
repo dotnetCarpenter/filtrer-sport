@@ -2,7 +2,9 @@
   "name": "filtrersport",
   "version": "2025.2.12",
   "scripts": {
-    "prebuild": "jq '.version = \"'${npm_package_version}'\"' manifest.json > manifest_tmp && mv manifest_tmp manifest.json",
+    "setVersion": "jq '.version = \"'${npm_package_version}'\"' manifest.json > manifest_tmp && mv manifest_tmp manifest.json",
+    "setIdentifier": "jq '.browser_specific_settings.gecko.id = \"'filtrersport@${npm_package_version}'\"' manifest.json > manifest_tmp && mv manifest_tmp manifest.json",
+    "prebuild": "npm run setVersion && npm run setIdentifier",
     "build": "web-ext build --overwrite-dest --artifacts-dir ./build"
   },
   "peerDependencies": {
