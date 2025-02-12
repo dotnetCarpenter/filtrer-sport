@@ -46,11 +46,11 @@ const sportTopics = [
 console.debug ("is Uint8Array.toHex supported?", !!Uint8Array.prototype.toHex)
 
 async function sha256 (string) {
-    const buffer = await crypto.subtle.digest ("SHA-256", new TextEncoder().encode (string))
+    const buffer = await subtle.digest ("SHA-256", new TextEncoder().encode (string))
     return Uint8Array.prototype.toHex
         ? new Uint8Array(buffer).toHex ()
         : Array.from (new Uint8Array(buffer), x => x.toString(16).padStart (2, 0)).join ("")
 }
 
 const hash = await sha256 (sportTopics.join (""))
-console.log (hash)
+console.debug ("SHA-256", hash)
