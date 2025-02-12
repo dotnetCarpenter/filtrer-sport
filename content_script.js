@@ -141,4 +141,4 @@ listItems.forEach ((item, index) => void (
 console.timeEnd (`Filter_${sportTopics.length}Sport_Topics`)
 
 sha256 (sportTopics.join (""))
-    .then (console.debug.bind (console, "SHA-256"))
+ .then (console.debug.bind (console, "SHA-256"))
