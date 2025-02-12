@@ -43,52 +43,39 @@ const sportTopics = [
     "VM i håndbold",
 ]
 
-const arrayStringToUInt8Array = array => new TextEncoder().encode (array.join (";"))
+//    uInt8ToString :: Uint8 -> String
+const uInt8ToString = x => x.toString (16).padStart (2, 0)
 
-const typedArrayToArray = typedArray  => new TextDecoder().decode (typedArray).split (";")
+//    convertToArray :: Type<TypedArray> a -> (a -> b) -> TypedArray<a> -> Array<b>
+const convertToArray = ArrayType => map => buffer => (
+    Array.from (new ArrayType (buffer), map)
+)
 
-/******************** TESTS ********************/
-const equalArrayLeft = a1 => a2 => a1.every ((x, n) => x === a2[n])
-const equalArrays = a1 => a2 => equalArrayLeft (a1) (a2) && equalArrayLeft (a2) (a1)
-const trace = x => (console.log (x), x)
+//    arrayBufferToArrayString :: ArrayBuffer -> Array<String>
+const arrayBufferToArrayString = convertToArray (Uint8Array)
+                                                (uInt8ToString)
 
-/******************** CONVERSION ********************/
-// console.log (arrayStringToUInt8Array ([1,2]))
-// console.log (arrayStringToUInt8Array (sportTopics))
-// console.log (typedArrayToArray(arrayStringToUInt8Array (sportTopics)))
-// console.log (equalArrays (typedArrayToArray(arrayStringToUInt8Array (sportTopics)))
-//                          (sportTopics), "The original array and the encoded/decoded array should be equal")
+//    getHash :: String -> Promise<ArrayBuffer>
+const getHash = s => subtle.digest ("SHA-256", new TextEncoder().encode (s))
 
-/******************** HASHING ********************/
-subtle.digest ("SHA-256", new TextEncoder().encode (sportTopics.join ("")))
-      .then   (trace)
-      .then   (x => new Uint8Array (x))
-      .then   (trace)
-      .then   (typedArray => {
-        console.log ("typedArray.map", typedArray.map (trace))
-        console.log ("Array.prototype.map.call", Array.prototype.map.call (typedArray, trace))
-      })
-    //   .then   (x => Array.prototype.map.call (x, x => (('00' + x.toString (16)).slice (-2))))
-    //   .then   (trace)
-    //   .then   (x => x.join (""))
-    //   .then   (trace)
-    //   .then   (x => new TextDecoder().decode (x))
-    //   .then   (trace)
-    //   .then   (buffer => new Uint8Array (buffer))
-    //   .then   (trace)
-    //   .then   (x => new TextDecoder ().decode (x.buffer))
-    //   .then   (x => new Uint8Array (x).toString ())
-    //   .then   (text => text.map (x => (('00' + x.toString (16)).slice (-2))))
-    //   .then   (trace)
-    //   .then   (buffer => new DataView (buffer))
-    //   .then   (trace)
+// getHash (sportTopics.join (""))
+//     .then (arrayBufferToString)
+//     .then (x => x.join (""))
+//     .then (console.log)
 
-async function sha256(str) {
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-    console.log (buf)
-    const uint8Array = new Uint8Array(buf)
-    console.log (uint8Array)
-    return Array.prototype.map.call(uint8Array, x => (('00'+x.toString(16)).slice(-2)));
+async function sha256 (string) {
+    const buf = await crypto.subtle.digest ("SHA-256", new TextEncoder().encode (string))
+    return Array.from (new Uint8Array(buf), x => x.toString(16).padStart (2, 0)).join ("")
 }
-// console.log ("sha256")
-// sha256 (sportTopics.join (";")).then (console.log.bind (console, "sha256"))
+// sha256 (sportTopics.join ("")).then (console.log)
+
+Promise.all ([
+            getHash (sportTopics.join ("")),
+            sha256  (sportTopics.join ("")),
+        ])
+       .then (([buffer, hash2]) => {
+            const hash1 = arrayBufferToArrayString (buffer).join ("")
+            console.log ("hash1", hash1)
+            console.log ("hash2", hash2)
+            console.log (hash1 === hash2, "getHash and sha256 must return the same hash")
+       });
