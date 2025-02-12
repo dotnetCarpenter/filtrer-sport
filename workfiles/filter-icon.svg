@@ -1,9 +1,7 @@
-<svg width="38" height="38" viewBox="0 0 16 16" fill="none"
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="64" height="64" viewBox="0 0 16 16" fill="none" version="2" xmlns="http://www.w3.org/2000/svg">
     <rect fill="black" width="16" height="16" />
-    <image height="16" width="16" y="-4"
-        xlink:href="data:image/png;base64,
+    <image height="16" width="16" y="-4.6"
+        href="data:image/png;base64,
             iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAM1BMVEUAAAD///+/v79AQEAgICDf
             399gYGDPz89/f38wMDDv7++fn59wcHCQkJAQEBCvr69QUFDNmfQpAAAArUlEQVRYhe2SURaEIAhF
             TcEsbZr9r3Y+FCshFzDn3b94dA+KzgEAAACKoKFJFrbhf1oM9kyv2cLRFPgKS1vSmZcsGALu3+vV
@@ -11,7 +9,7 @@
             rFEMydmCNmaURh7lQZ4IkyVQk5Kajh6P7BJ4TS7hnvVLO6ThsQYAAADgX/gBEpsEmVoZOSoAAAAA
             SUVORK5CYII="
     />
-    <!-- <image xlink:href="./originale-icon.png" height="16" width="16" y="-4" /> -->
+    <!-- <image href="./originale-icon.png" height="16" width="16" y="-4" /> -->
     <g transform="translate(0 4)">
         <path d="M2 3H14V4.5H2V3Z" fill="white"/>
         <path d="M3 6H12.5V7.5H3.5V6Z" fill="white"/>

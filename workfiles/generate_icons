@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Current source for svgexport:
+# https://github.com/piqnt/svgexport
+if ! type "svgexport" > /dev/null; then
+    echo "Installing svgexport via npm..."
+    npm install svgexport -g
+fi
+
+svgexport filter-icon.svg filter-64.png 64:64
+svgexport filter-icon.svg filter-38.png 38:38
+svgexport filter-icon.svg filter-19.png 19:19
+

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ ! -r "$1" ]]; then
+    echo "File not found or readable"
+    exit 1
+fi
+cat "$1"
