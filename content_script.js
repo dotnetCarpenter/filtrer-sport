@@ -142,3 +142,19 @@ console.timeEnd (`Filter_${sportTopics.length}Sport_Topics`)
 
 sha256 (sportTopics.join (""))
  .then (console.debug.bind (console, "SHA-256"))
+
+// Below does not work eventhough "permissions": ["tabs"] is set in manifest.json
+// Probably none of this is available in content_script.
+//
+// You can only request permissions inside the handler for a user action, such as from a
+// toolbar button (browser action), shortcut menu item, or similar.
+// If you request several permissions at once they are either all granted or all declined,
+// the user cannot choose to grant some and not others.
+// https://extensionworkshop.com/documentation/develop/request-the-right-permissions/#request-permissions-at-runtime
+// const permissions = await browser.permissions.Permissions.getAll ()
+// console.debug ("permissions.Permissions", permissions)
+// console.debug ("browser", browser)
+// console.debug ("browser.tabs", browser.tabs)
+// const tabs = browser.tabs.query({active: true, currentWindow: true});
+// console.debug (tabs)
+// browser.pageAction.show(tabs[0].id)
