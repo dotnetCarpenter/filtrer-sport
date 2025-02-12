@@ -4,7 +4,9 @@
   "description": "Filtrer sport på dr.dk/nyheder fra.",
   "version": "2025.2.12",
   "icons": {
-    "64": "icons/icon.png"
+    "64": "icons/filter-64.png",
+    "38": "icons/filter-38.png",
+    "19": "icons/filter-19.png"
   },
   "permissions": [
     "tabs"
@@ -23,7 +25,11 @@
     }
   ],
   "page_action": {
-    "default_icon": "icons/icon.png",
+    "default_icon": {
+      "64": "icons/filter-64.png",
+      "38": "icons/filter-38.png",
+      "19": "icons/filter-19.png"
+    },
     "default_title": "Ret i sports emner",
     "show_matches": [
       "https://*.dr.dk/nyheder",

@@ -158,3 +158,4 @@ sha256 (sportTopics.join (""))
 // const tabs = browser.tabs.query({active: true, currentWindow: true});
 // console.debug (tabs)
 // browser.pageAction.show(tabs[0].id)
+// console.debug ("browser.pageAction", browser.pageAction)
