@@ -142,9 +142,11 @@ console.timeEnd (`Filter_${sportTopics.length}Sport_Topics`)
 
 sha256 (sportTopics.join (""))
  .then (hash => {
+    browser.storage.sync.clear ()
     browser.storage.sync.set ({ hash, sportTopics })
     browser.storage.sync.get ("hash").then (console.debug)
-    browser.storage.sync.get ().then (console.debug)
+    // browser.storage.sync.get ().then (console.debug)
+    // console.debug (browser.storage.sync)
  })
 
 // Below does not work eventhough "permissions": ["tabs"] is set in manifest.json

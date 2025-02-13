@@ -37,7 +37,8 @@
     "show_matches": [
       "https://*.dr.dk/nyheder",
       "https://*.dr.dk/nyheder/seneste/*"
-    ]
+    ],
+    "default_popup": "html/popup.htm"
   },
   "browser_specific_settings": {
     "gecko": {
