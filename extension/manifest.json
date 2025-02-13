@@ -17,7 +17,7 @@
     {
       "matches": [
         "https://*.dr.dk/nyheder",
-        "https://*.dr.dk/nyheder/*"
+        "https://*.dr.dk/nyheder/seneste/*"
       ],
       "js": [
         "lib/FP.js",
@@ -36,7 +36,7 @@
     "default_title": "Ret i sports emner",
     "show_matches": [
       "https://*.dr.dk/nyheder",
-      "https://*.dr.dk/nyheder/*"
+      "https://*.dr.dk/nyheder/seneste/*"
     ]
   },
   "browser_specific_settings": {
