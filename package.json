@@ -2,10 +2,11 @@
   "name": "filtrersport",
   "version": "2025.2.12",
   "scripts": {
-    "setVersion": "jq '.version = \"'${npm_package_version}'\"' manifest.json > manifest_tmp && mv manifest_tmp manifest.json",
-    "setIdentifier": "jq '.browser_specific_settings.gecko.id = \"'filtrersport@${npm_package_version}'\"' manifest.json > manifest_tmp && mv manifest_tmp manifest.json",
+    "setVersion": "jq '.version = \"'${npm_package_version}'\"' extension/manifest.json > manifest_tmp && mv manifest_tmp extension/manifest.json",
+    "setIdentifier": "jq '.browser_specific_settings.gecko.id = \"'filtrersport@${npm_package_version}'\"' extension/manifest.json > manifest_tmp && mv manifest_tmp extension/manifest.json",
     "prebuild": "npm run setVersion && npm run setIdentifier",
-    "build": "web-ext build --overwrite-dest --artifacts-dir ./build"
+    "lint": "web-ext --source-dir ./extension --artifacts-dir ./build lint",
+    "build": "web-ext --source-dir ./extension --overwrite-dest --artifacts-dir ./build build"
   },
   "peerDependencies": {
     "web-ext": "^8.4.0"

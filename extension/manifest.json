@@ -4,9 +4,11 @@
   "description": "Filtrer sport på dr.dk/nyheder fra.",
   "version": "2025.2.12",
   "icons": {
-    "64": "icons/filter-64.png",
-    "38": "icons/filter-38.png",
-    "19": "icons/filter-19.png"
+    "96": "icons/filter-icon.svg",
+    "64": "icons/filter-icon.svg",
+    "48": "icons/filter-icon.svg",
+    "38": "icons/filter-icon.svg",
+    "19": "icons/filter-icon.svg"
   },
   "permissions": [
     "tabs"
@@ -27,6 +29,7 @@
   "page_action": {
     "default_icon": {
       "64": "icons/filter-64.png",
+      "48": "icons/filter-48.png",
       "38": "icons/filter-38.png",
       "19": "icons/filter-19.png"
     },
