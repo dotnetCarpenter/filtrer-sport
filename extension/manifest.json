@@ -11,7 +11,7 @@
     "19": "icons/filter-icon.svg"
   },
   "permissions": [
-    "tabs"
+    "storage"
   ],
   "content_scripts": [
     {

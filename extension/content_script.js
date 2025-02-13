@@ -141,7 +141,11 @@ listItems.forEach ((item, index) => void (
 console.timeEnd (`Filter_${sportTopics.length}Sport_Topics`)
 
 sha256 (sportTopics.join (""))
- .then (console.debug.bind (console, "SHA-256"))
+ .then (hash => {
+    browser.storage.sync.set ({ hash, sportTopics })
+    browser.storage.sync.get ("hash").then (console.debug)
+    browser.storage.sync.get ().then (console.debug)
+ })
 
 // Below does not work eventhough "permissions": ["tabs"] is set in manifest.json
 // Probably none of this is available in content_script.
