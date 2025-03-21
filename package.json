@@ -1,6 +1,6 @@
 {
   "name": "filtrersport",
-  "version": "2025.2.12",
+  "version": "2025.3.21",
   "scripts": {
     "setVersion": "jq '.version = \"'${npm_package_version}'\"' extension/manifest.json > manifest_tmp && mv manifest_tmp extension/manifest.json",
     "setIdentifier": "jq '.browser_specific_settings.gecko.id = \"'filtrersport@${npm_package_version}'\"' extension/manifest.json > manifest_tmp && mv manifest_tmp extension/manifest.json",

@@ -11,7 +11,7 @@ function storageHandler (changes, areaName) {
         : output1.textContent
     storage.sync.get ()
            .then (everything => {
-               const hash = everything.hash;
+               const hash = everything.hash
                const sportTopics = everything.sportTopics
 
                output2.textContent = hash

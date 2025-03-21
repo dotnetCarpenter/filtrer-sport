@@ -90,6 +90,7 @@ const sportTopics = [
     "Hestesport",
     "Håndbold",
     "Ishockey",
+    "Kampsport",
     "Kort sport",
     "Kvindelandsholdet",
     "Kvindeligaen",

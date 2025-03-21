@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Filtrer sport",
   "description": "Filtrer sport på dr.dk/nyheder fra.",
-  "version": "2025.2.12",
+  "version": "2025.3.21",
   "icons": {
     "96": "icons/filter-icon.svg",
     "64": "icons/filter-icon.svg",
@@ -42,7 +42,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "filtrersport@2025.2.12"
+      "id": "filtrersport@2025.3.21"
     }
   }
 }
