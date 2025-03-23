@@ -39,10 +39,5 @@
       "https://*.dr.dk/nyheder/seneste/*"
     ],
     "default_popup": "html/popup.htm"
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "filtrersport@2025.3.21"
-    }
   }
 }

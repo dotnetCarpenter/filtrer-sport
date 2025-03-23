@@ -3,12 +3,11 @@
   "version": "2025.3.21",
   "scripts": {
     "setVersion": "jq '.version = \"'${npm_package_version}'\"' extension/manifest.json > manifest_tmp && mv manifest_tmp extension/manifest.json",
-    "setIdentifier": "jq '.browser_specific_settings.gecko.id = \"'filtrersport@${npm_package_version}'\"' extension/manifest.json > manifest_tmp && mv manifest_tmp extension/manifest.json",
-    "prebuild": "npm run setVersion && npm run setIdentifier",
+    "prebuild": "npm run setVersion",
     "lint": "web-ext --source-dir ./extension --artifacts-dir ./build lint",
-    "build": "web-ext --source-dir ./extension --overwrite-dest --artifacts-dir ./build build"
+    "build": "web-ext --source-dir ./extension --overwrite-dest --artifacts-dir ./build --filename filtrersport.zip build"
   },
   "peerDependencies": {
-    "web-ext": "^8.4.0"
+    "web-ext": "^8.5.0"
   }
 }
