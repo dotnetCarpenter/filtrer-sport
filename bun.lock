@@ -3,6 +3,9 @@
   "workspaces": {
     "": {
       "name": "filtrersport",
+      "dependencies": {
+        "sanctuary": "git@github.com:sanctuary-js/sanctuary.git#4f953fd291e326a39fe68c3b9c7af4f9e51c208f",
+      },
       "peerDependencies": {
         "web-ext": "^8.5.0",
       },
@@ -512,6 +515,22 @@
     "safe-buffer": ["safe-buffer@5.1.2", "", {}, "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="],
 
     "safe-stable-stringify": ["safe-stable-stringify@2.5.0", "", {}, "sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA=="],
+
+    "sanctuary": ["sanctuary@git+ssh://git@github.com:sanctuary-js/sanctuary.git#4f953fd291e326a39fe68c3b9c7af4f9e51c208f", { "dependencies": { "sanctuary-def": "0.22.0", "sanctuary-either": "2.1.0", "sanctuary-maybe": "2.1.0", "sanctuary-pair": "2.1.0", "sanctuary-show": "2.0.0", "sanctuary-type-classes": "12.1.0", "sanctuary-type-identifiers": "3.0.0" } }, "4f953fd291e326a39fe68c3b9c7af4f9e51c208f"],
+
+    "sanctuary-def": ["sanctuary-def@0.22.0", "", { "dependencies": { "sanctuary-either": "2.1.0", "sanctuary-show": "2.0.0", "sanctuary-type-classes": "12.1.0", "sanctuary-type-identifiers": "3.0.0" } }, "sha512-lywS27TfuPHzelMh6M1YWBcB//Lom4Gko/tGjKYbDPkPet1B5KplsSdjY+5sF4mwp6+PDUodsk/Y3Uskrc/ebw=="],
+
+    "sanctuary-either": ["sanctuary-either@2.1.0", "", { "dependencies": { "sanctuary-show": "2.0.0", "sanctuary-type-classes": "12.1.0" } }, "sha512-AsQCma2yGAVS7Dlxme/09NZWQfcXBNylVmkuvarp8uOe9otSwClOgQyyePN2OxO4hTf3Au1Ck4ggm+97Je06kA=="],
+
+    "sanctuary-maybe": ["sanctuary-maybe@2.1.0", "", { "dependencies": { "sanctuary-show": "2.0.0", "sanctuary-type-classes": "12.1.0" } }, "sha512-xCmvaEkYaIz5klWUrsgvgORKTL3bVYxATp7HyGBY0ZCu9tHJtSYDTpwnqMkRknHFIU986Kr2M/dJdiFvuc6UCQ=="],
+
+    "sanctuary-pair": ["sanctuary-pair@2.1.0", "", { "dependencies": { "sanctuary-show": "2.0.0", "sanctuary-type-classes": "12.1.0" } }, "sha512-yY1JzzIJ/Ex7rjN8NmQLB7yv6GVzNeaMvxoYSW8w1ReLQI0n2sGOVCnAVipZuCv7wmfd+BavSXp59rklJeYytw=="],
+
+    "sanctuary-show": ["sanctuary-show@2.0.0", "", {}, "sha512-REj4ZiioUXnDLj6EpJ9HcYDIEGaEexmB9Fg5o6InZR9f0x5PfnnC21QeU9SZ9E7G8zXSZPNjy8VRUK4safbesw=="],
+
+    "sanctuary-type-classes": ["sanctuary-type-classes@12.1.0", "", { "dependencies": { "sanctuary-type-identifiers": "3.0.0" } }, "sha512-oWP071Q88dEgJwxHLZp8tc7DoS+mWmYhYOuhP85zznPpIxV1ZjJfyRvcR59YCazyFxyFeBif7bJx1giLhDZW0Q=="],
+
+    "sanctuary-type-identifiers": ["sanctuary-type-identifiers@3.0.0", "", {}, "sha512-YFXYcG0Ura1dSPd/1xLYtE2XAWUEsBHhMTZvYBOvwT8MeFQwdUOCMm2DC+r94z6H93FVq0qxDac8/D7QpJj6Mg=="],
 
     "sax": ["sax@1.4.1", "", {}, "sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg=="],
 

@@ -9,5 +9,8 @@
   },
   "peerDependencies": {
     "web-ext": "^8.5.0"
+  },
+  "dependencies": {
+    "sanctuary": "git@github.com:sanctuary-js/sanctuary.git#4f953fd291e326a39fe68c3b9c7af4f9e51c208f"
   }
 }
