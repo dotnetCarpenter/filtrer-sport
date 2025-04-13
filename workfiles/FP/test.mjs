@@ -1,12 +1,29 @@
 import test from "node:test"
 import assert from "node:assert"
-import { Maybe, fmap, I, pipe, join } from "./FP.mjs"
+import { Nothing, Just, Maybe, fmap, I, pipe, join } from "./FP.mjs"
 
 const concat = a => b => a.concat (b)
 const flip = f => a => b => f (b) (a)
 const append = flip (concat)
 
-test ("Functions", t => {
+test ("Data types", () => {
+    const pattern = type => {
+        switch (type.constructor) {
+            case Nothing:
+                assert.ok (true, "is not a Nothing")
+                break
+            case Just: assert.ok (true, "is not a Just")
+            default: assert.fail (`${type} is not a matched data type`)
+        }
+    }
+
+    const nothing = Maybe (null)
+    const one = Maybe (1)
+    pattern (nothing)
+    pattern (one)
+})
+
+test ("Functions", () => {
     assert.strictEqual (
         append (" world") ("Hello"),
         "Hello world")
@@ -63,10 +80,10 @@ test ("Maybe", async t => {
         const associativeLaw2      = pipe (fmap (join), join)
         const callJoinOnInnerValue = pipe (join, fmap (join))
 
-        const monads = ([string,
-                         nothing,
-                         numbers,
-                         strings]).map (Maybe)
+        const monads = fmap (Maybe) ([string,
+                                      nothing,
+                                      numbers,
+                                      strings])
 
         const monadAssciativeAssertion = mma => {
             assert.deepStrictEqual (
